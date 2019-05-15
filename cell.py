@@ -4,6 +4,7 @@ from neuron import h
 import csv 
 import math
 h.load_file('stdrun.hoc')
+import sys
 
 def new_cell(gna,gk,gleak):
     
@@ -141,7 +142,7 @@ def get_passive_properties(soma):
 
 def get_cell_properties(gna,gk,gleak, as_list=False):
     chan_prop = {'gna':gna,"gk":gk,"gleak":gleak}
-
+    print(chan_prop)
     soma = new_cell(gna,gk,gleak)
     p_prop = get_passive_properties(soma)
 
@@ -160,10 +161,13 @@ def get_cell_properties(gna,gk,gleak, as_list=False):
     else:
         return all_props
 
-def test_a_cell():
-    props = get_cell_properties(30,10,15)
+def test_a_cell(gna=132,gk=19,gleak=101):
+    props = get_cell_properties(gna, gk, gleak, as_list=True)
     print(props)
     return
 
 if __name__ == '__main__':
-    test_a_cell()
+    if __file__ != sys.argv[-1]:
+        test_a_cell(int(sys.argv[1]),int(sys.argv[2]),int(sys.argv[3]))
+    else:
+        test_a_cell()
